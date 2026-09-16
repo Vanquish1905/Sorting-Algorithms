@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class SelectionSort extends ArrayTools{
+public class SelectionSort extends ArrayTools implements Sorter{
     public static List<Integer> swap(List<Integer> list, int i, int j) {
         int temp = list.get(i);
         list.set(i,list.get(j));
@@ -37,7 +37,7 @@ public class SelectionSort extends ArrayTools{
         return list;
     }
 
-    public static int[] sort(int[] array){
+    public int[] sort(int[] array){
         if (array ==null||array.length==0)return null;
         for(int i =0; i<array.length;i++){
             swap(array,i,indexOfMin(array,i));
