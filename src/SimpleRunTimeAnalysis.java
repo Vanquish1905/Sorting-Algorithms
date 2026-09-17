@@ -7,7 +7,7 @@ public class SimpleRunTimeAnalysis {
 
     // Runs sorting on an array and measures elapsed time in milliseconds
     public static long Analysis(int[] array) {
-        Sorter sorter = new BubbleSort();
+        Sorter sorter = new SelectionSort();
         long startTime = System.currentTimeMillis();
         sorter.sort(array);
         long end = System.currentTimeMillis();
@@ -113,8 +113,8 @@ public class SimpleRunTimeAnalysis {
 
         int startLength = 5000;
         int step = 5000;
-        int totalSteps = 5;
+        int totalSteps = 10;
         System.out.println("Running Incremental Length Analysis...");
-        runIncrementalLengths(cycles, startLength, step, totalSteps, "incremental_runtime");
+        runIncrementalLengths(cycles, startLength, step, totalSteps, "SelectionSort");
     }
 }

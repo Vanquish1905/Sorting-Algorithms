@@ -108,7 +108,6 @@ public class ArrayTools {
         int[] array = new int[array1.length + array2.length];
         System.arraycopy(array1, 0, array, 0, array1.length);
         System.arraycopy(array2, 0, array, array1.length, array2.length);
-        System.out.println(arrayToString(array));
         return array;
     }
 

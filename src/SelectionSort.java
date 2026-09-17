@@ -44,7 +44,7 @@ public class SelectionSort extends ArrayTools implements Sorter{
         }
         return array;
     }
-    public static int[] sortSlow(int[] array){
+    public int[] sortSlow(int[] array){
         int[] arr = new int[0];
         if (array ==null||array.length==0)return null;
         for (int i = 0; i<array.length; i++){
