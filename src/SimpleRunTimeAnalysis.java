@@ -114,7 +114,7 @@ public class SimpleRunTimeAnalysis {
         int startLength = 5000;
         int step = 5000;
         int totalSteps = 10;
-        System.out.println("Running Incremental Length Analysis...");
+        System.out.println("Running Analysis...");
         runIncrementalLengths(cycles, startLength, step, totalSteps, "SelectionSort");
     }
 }
