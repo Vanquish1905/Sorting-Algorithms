@@ -5,9 +5,8 @@ import java.util.Random;
 
 public class SimpleRunTimeAnalysis {
 
-    // Runs sorting on an array and measures elapsed time in milliseconds
-    public static long Analysis(int[] array) {
-        Sorter sorter = new SelectionSort();
+    // Runs the given sorter on an array and measures the time in milliseconds
+    public static long Analysis(Sorter sorter, int[] array) {
         long startTime = System.currentTimeMillis();
         sorter.sort(array);
         long end = System.currentTimeMillis();
@@ -24,37 +23,37 @@ public class SimpleRunTimeAnalysis {
         return array;
     }
 
-    // Calculates average execution time for a given array length across multiple cycles
-    public static long average(int cycles, int length) {
+    // Average time for a given array length across multiple cycles
+    public static long average(Sorter sorter, int cycles, int length) {
         long result = 0;
         for (int i = 0; i < cycles; i++) {
-            result += Analysis(createArray(length));
+            result += Analysis(sorter, createArray(length));
         }
         long avg = result / cycles;
         System.out.println("Length: " + length + " -> " + avg + " ms");
         return avg;
     }
 
-    // Strategy 1: Uses a custom array of explicit lengths
-    public static void runCustomLengths(int cycles, int[] lengths, String fileName) {
+    // Strategy 1: custom array of explicit lengths
+    public static void runCustomLengths(Sorter sorter, int cycles, int[] lengths, String fileName) {
         double[][] points = new double[lengths.length][2];
         for (int i = 0; i < lengths.length; i++) {
             int len = lengths[i];
-            long avgTime = average(cycles, len);
-            points[i][0] = len;      // X coordinate: Array length
-            points[i][1] = avgTime;  // Y coordinate: Execution time (ms)
+            long avgTime = average(sorter, cycles, len);
+            points[i][0] = len;      // X: array length
+            points[i][1] = avgTime;  // Y: time (ms)
         }
         writePlotToCsv(fileName, points);
     }
 
-    // Strategy 2: Starts at startLength and increments by step for a set number of steps
-    public static void runIncrementalLengths(int cycles, int startLength, int step, int totalSteps, String fileName) {
+    // Strategy 2: start at startLength and add step for a set number of steps
+    public static void runIncrementalLengths(Sorter sorter, int cycles, int startLength, int step, int totalSteps, String fileName) {
         double[][] points = new double[totalSteps][2];
         for (int i = 0; i < totalSteps; i++) {
             int currentLength = startLength + (i * step);
-            long avgTime = average(cycles, currentLength);
-            points[i][0] = currentLength; // X coordinate
-            points[i][1] = avgTime;       // Y coordinate
+            long avgTime = average(sorter, cycles, currentLength);
+            points[i][0] = currentLength;
+            points[i][1] = avgTime;
         }
         writePlotToCsv(fileName, points);
     }
@@ -68,10 +67,8 @@ public class SimpleRunTimeAnalysis {
             fileName += ".csv";
         }
 
-        // Target path: [project root]/results/
         File resultsDir = new File("results");
 
-        // Create directory if it does not exist
         if (!resultsDir.exists()) {
             boolean created = resultsDir.mkdirs();
             if (created) {
@@ -82,10 +79,8 @@ public class SimpleRunTimeAnalysis {
         File outputFile = new File(resultsDir, fileName);
 
         StringBuilder csvBuilder = new StringBuilder();
-        // Optional CSV Header
         csvBuilder.append("Length;TimeMs\n");
 
-        // Iterate through 2D array and write only pairs of two numbers (X, Y)
         for (double[] point : dataPoints) {
             if (point != null && point.length >= 2) {
                 csvBuilder.append(String.format("%.0f;%.2f\n", point[0], point[1]));
@@ -103,18 +98,20 @@ public class SimpleRunTimeAnalysis {
 
     public static void main(String[] args) {
         int cycles = 3;
-
-        /*
-        int[] customLengths = {5000, 10000, 20000, 40000, 60000};
-        System.out.println("Running Custom Length Analysis...");
-        runCustomLengths(cycles, customLengths, "custom_lengths_runtime");
-
-         */
-
         int startLength = 5000;
         int step = 5000;
         int totalSteps = 10;
-        System.out.println("Running Analysis...");
-        runIncrementalLengths(cycles, startLength, step, totalSteps, "SelectionSort");
+
+        //System.out.println("Running SelectionSort...");
+        //runIncrementalLengths(new SelectionSort(), cycles, startLength, step, totalSteps, "SelectionSort");
+
+        //System.out.println("Running BubbleSort...");
+        //runIncrementalLengths(new BubbleSort(), cycles, startLength, step, totalSteps, "BubbleSort");
+
+        //System.out.println("Running InsertionSort...");
+        //runIncrementalLengths(new InsertionSort(), cycles, startLength, step, totalSteps, "InsertionSort");
+
+        System.out.println("Running QuickSort...");
+        runIncrementalLengths(new QuickSort(), cycles, startLength, step, totalSteps, "QuickSort");
     }
 }
