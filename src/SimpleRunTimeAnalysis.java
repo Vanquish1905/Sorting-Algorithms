@@ -108,9 +108,9 @@ public class SimpleRunTimeAnalysis {
 
     public static void main(String[] args) {
         int cycles = 1;
-        int startLength = 1;
-        int step = 1;
-        int totalSteps = 1;
+        int startLength = 1000;
+        int step = 10000;
+        int totalSteps = 10;
 
         //System.out.println("Running SelectionSort...");
         //runIncrementalLengths(new SelectionSort(), cycles, startLength, step, totalSteps, "SelectionSort");
@@ -121,7 +121,10 @@ public class SimpleRunTimeAnalysis {
         //System.out.println("Running InsertionSort...");
         //runIncrementalLengths(new InsertionSort(), cycles, startLength, step, totalSteps, "InsertionSort");
 
-        System.out.println("Running QuickSort...");
-        runIncrementalLengths(new QuickSort(), cycles, startLength, step, totalSteps, "QuickSort");
+        //System.out.println("Running QuickSort...");
+        //runIncrementalLengths(new QuickSort(), cycles, startLength, step, totalSteps, "QuickSort");
+
+        System.out.println("Running MergeSort...");
+        runIncrementalLengths(new MergeSort(), cycles, startLength, step, totalSteps, "MergeSort");
     }
 }
