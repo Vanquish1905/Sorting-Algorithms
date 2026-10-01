@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 public class SimpleRunTimeAnalysis {
@@ -63,9 +65,17 @@ public class SimpleRunTimeAnalysis {
      */
     public static void writePlotToCsv(String fileName, double[][] dataPoints) {
         // Ensure the file ends with .csv
-        if (!fileName.toLowerCase().endsWith(".csv")) {
-            fileName += ".csv";
+        if (fileName.toLowerCase().endsWith(".csv")) {
+            fileName = fileName.substring(0,fileName.length()-4); //strip the .csv
         }
+        String time = LocalDateTime.now(Clock.systemUTC()).toString();
+        String[] timeArr = time.split(":");
+        System.out.println(timeArr[2]);
+        String mins = timeArr[0];
+        String secs = timeArr[2].split("\\.")[0];
+        fileName += "_"  + mins + "." + secs;
+
+        fileName += ".csv";
 
         File resultsDir = new File("results");
 
@@ -97,10 +107,10 @@ public class SimpleRunTimeAnalysis {
     }
 
     public static void main(String[] args) {
-        int cycles = 3;
-        int startLength = 5000;
-        int step = 5000;
-        int totalSteps = 10;
+        int cycles = 1;
+        int startLength = 1;
+        int step = 1;
+        int totalSteps = 1;
 
         //System.out.println("Running SelectionSort...");
         //runIncrementalLengths(new SelectionSort(), cycles, startLength, step, totalSteps, "SelectionSort");
