@@ -1,8 +1,9 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Clock;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class SimpleRunTimeAnalysis {
@@ -64,18 +65,17 @@ public class SimpleRunTimeAnalysis {
      * Writes pairs of numbers [x, y] into a CSV file under /results/
      */
     public static void writePlotToCsv(String fileName, double[][] dataPoints) {
-        // Ensure the file ends with .csv
+        // Ensure the file extension is removed before appending timestamp
         if (fileName.toLowerCase().endsWith(".csv")) {
-            fileName = fileName.substring(0,fileName.length()-4); //strip the .csv
+            fileName = fileName.substring(0, fileName.length() - 4);
         }
-        String time = LocalDateTime.now(Clock.systemUTC()).toString();
-        String[] timeArr = time.split(":");
-        System.out.println(timeArr[2]);
-        String mins = timeArr[0];
-        String secs = timeArr[2].split("\\.")[0];
-        fileName += "_"  + mins + "." + secs;
 
-        fileName += ".csv";
+        // Format current German time (Europe/Berlin) as YYYY-MM-DD_HH-mm-ss
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        String timestamp = ZonedDateTime.now(ZoneId.of("Europe/Berlin")).format(formatter);
+
+        // Append the clean timestamp and file extension
+        fileName += "_" + timestamp + ".csv";
 
         File resultsDir = new File("results");
 
